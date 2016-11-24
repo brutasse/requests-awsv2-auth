@@ -39,8 +39,9 @@ class AwsV2Auth(AuthBase):
                             'response-content-encoding',
                             'response-content-language',
                             'response-cache-control', 'response-expires',
-                            'requestpayment', 'torrent', 'uploadid', 'uploads',
-                            'versionid', 'versioning', 'versions', 'website']:
+                            'requestpayment', 'tagging', 'torrent', 'uploadid',
+                            'uploads', 'versionid', 'versioning', 'versions',
+                            'website']:
             path += '?' + parsed.query
         sig_headers = sorted([[k.lower(), v]
                               for k, v in headers.items()
