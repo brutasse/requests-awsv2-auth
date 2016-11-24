@@ -6,7 +6,7 @@ with open('README.rst', 'r') as f:
 
 setup(
     name='requests-awsv2-auth',
-    version='1.0',
+    version='1.1',
     url='https://github.com/brutasse/requests-awsv2-auth',
     license='BSD',
     author=u'Bruno Renié',
