@@ -16,6 +16,10 @@ except ImportError:
     from urllib import urlencode
 
 
+def safe_decode(value):
+    return value.decode('utf-8') if hasattr(value, 'decode') else value
+
+
 class AwsV2Auth(AuthBase):
     def __init__(self, key, secret):
         self.key = key
@@ -49,13 +53,11 @@ class AwsV2Auth(AuthBase):
                               for k, v in headers.items()
                               if k.lower().startswith('x-amz-')],
                              key=lambda i: i[0])
-        sig_headers = "\n".join((
-            ":".join((key, value))
-            for key, value in sig_headers
-        ))
+        sig_headers = "\n".join((":".join((key, safe_decode(value)))
+                                 for key, value in sig_headers))
         parts = [method,
-                 headers.get('Content-MD5', ''),
-                 headers.get('Content-Type', ''),
+                 safe_decode(headers.get('Content-MD5', '')),
+                 safe_decode(headers.get('Content-Type', '')),
                  # date provided in x-amz-date if not from Expires
                  str(expires) if expires is not None else ""]
         if sig_headers:
