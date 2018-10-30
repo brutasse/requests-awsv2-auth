@@ -32,6 +32,8 @@ class AwsV2Auth(AuthBase):
     def sign(self, method, url, headers, expires=None):
         parsed = urlparse(url)
         path = parsed.path
+        if parsed.params:
+            path = '{};{}'.format(path, parsed.params)
         if parsed.query in ['acl', 'cors', 'delete', 'lifecycle', 'location',
                             'logging', 'notification', 'partnumber', 'policy',
                             'response-content-disposition',
